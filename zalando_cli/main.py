@@ -1,4 +1,5 @@
 import click
+import requests
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -21,7 +22,11 @@ class AliasedGroup(click.Group):
 @click.pass_context
 def cli(ctx):
     if not ctx.invoked_subcommand:
-        click.secho('Not implemented yet', bold=True, fg='red')
+        r = requests.get('https://api.zalando.com/articles?pageSize=10')
+        for article in r.json()['content']:
+            click.secho(article['name'], bold=True, fg='blue')
+            click.secho('  ' + article['price']['formatted'], bold=True, fg='green')
+            click.secho('  SKU: {} Sizes: {}'.format(article['sku'], article['sizes']))
 
 def main():
     cli()
