@@ -1,0 +1,7 @@
+*.pyc
+.coverage
+*.egg
+*.egg-info
+coverage.xml
+junit.xml
+
