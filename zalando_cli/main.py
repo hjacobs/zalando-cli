@@ -3,6 +3,7 @@ import requests
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
+
 class AliasedGroup(click.Group):
 
     def get_command(self, ctx, cmd_name):
@@ -25,8 +26,10 @@ def cli(ctx):
         r = requests.get('https://api.zalando.com/articles?pageSize=10')
         for article in r.json()['content']:
             click.secho(article['name'], bold=True, fg='blue')
-            click.secho('  ' + article['price']['formatted'], bold=True, fg='green')
-            click.secho('  SKU: {} Sizes: {}'.format(article['sku'], article['sizes']))
+            for unit in article['units']:
+                click.secho('  ' + unit['price']['formatted'], bold=True, fg='green')
+                click.secho('  SKU: {} Size: {}'.format(unit['id'], unit['size']))
+
 
 def main():
     cli()

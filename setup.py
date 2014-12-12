@@ -15,6 +15,7 @@ from setuptools import setup
 
 __location__ = os.path.join(os.getcwd(), os.path.dirname(inspect.getfile(inspect.currentframe())))
 
+
 def read_version(package):
     data = {}
     with open(os.path.join(package, '__init__.py'), 'r') as fd:
